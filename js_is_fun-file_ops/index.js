@@ -13,16 +13,44 @@ var isJsonString = function(str) {
     return true;
 }
 
-// make new dir
-// do this synchronously so you're sure it happens first
-var makeDir = function(dirPath) {
-    fs.mkdir(dirPath);
-}
-
 var generateFileName = function(filename) {
     var currDateTime = datetime.create().format('y-m-d_H-S');
     // http://stackoverflow.com/questions/4250364/how-to-trim-a-file-extension-from-a-string-in-javascript
-    return(filename.replace(/\.[^/.]+$/, "") + "_EDITED_" + currDateTime)
+    return(filename.replace(/\.[^/.]+$/, "") + "_EDITED_" + currDateTime + ".txt")
+}
+
+var myFileReader = function(err, contents, filename, wholePath, newFileName, newWholePath) {
+
+    //do json stuff
+    if (isJsonString(contents)) {
+        var myJson = JSON.parse(contents)
+        myJson['original-path-name'] = dirname;
+        myJson['original-file-name'] = filename;
+        myJson['new-file-path'] = newWholePath;
+        myJson['new-file-name'] = newFileName;
+        // likely shouldnt be async
+        fs.writeFile(wholePath, JSON.stringify(myJson), function(err) {
+            if (err) throw err;
+        })
+
+    //do string stuff
+    } else {
+        var myStr = "\n" + filename + "\n"
+        myStr += dirname + "\n"
+        myStr += newWholePath + "\n"
+        myStr += newFileName
+        //write those 4 things to file
+        // likely shouldnt be async
+        fs.appendFile(wholePath, myStr, function (err) {
+            if (err) throw err;
+        });
+
+    }
+
+    // do file move
+    fs.rename(wholePath, newWholePath, function(err) {
+        if (err) throw err;
+    })
 }
 
 // open all files in directory
@@ -43,43 +71,14 @@ function readFiles(dirname, onFileContent, onError) {
             var newWholePath = __dirname + "/files/moved/" + newFileName;
 
             fs.readFile(wholePath, 'utf8', function(err, contents) {
-
-                //do json stuff
-                if (isJsonString(contents)) {
-                    var myJson = JSON.parse(contents)
-                    myJson['original-path-name'] = dirname;
-                    myJson['original-file-name'] = filename;
-                    myJson['new-file-path'] = newWholePath;
-                    myJson['new-file-name'] = newFileName;
-                    // likely shouldnt be async
-                    fs.writeFile(wholePath, JSON.stringify(myJson), function(err) {
-                        if (err) throw err;
-                    })
-
-                //do string stuff
-                } else {
-                    var myStr = "\n" + filename + "\n"
-                    myStr += dirname + "\n"
-                    myStr += newWholePath + "\n"
-                    myStr += newFileName
-                    //write those 4 things to file
-                    // likely shouldnt be async
-                    fs.appendFile(wholePath, myStr, function (err) {
-                        if (err) throw err;
-                    });
-
-                }
-
-                // do file move
-                fs.rename(wholePath, newWholePath, function(err) {
-                    if (err) throw err;
-                })
+                myFileReader(err, contents, filename, wholePath, newFileName, newWholePath);
             });
         })
     })
 }
 
 // do this synchronously so it happens first
-makeDir(__dirname + "/files/moved/");
+fs.mkdir(__dirname + "/files/moved/", function() {
+    readFiles(dirname);
+});
 // do this asynchronous so it's fast
-readFiles(dirname);
