@@ -1,5 +1,0 @@
-just some silly text
-random-text-file.txt
-/Users/jeff/Dropbox/projects/promise_financial/js_is_fun-file_ops/files/original/random-text-file.txt
-/Users/jeff/Dropbox/projects/promise_financial/js_is_fun-file_ops/files/moved/random-text-file_EDITED_16-04-24_17-27.txt
-random-text-file_EDITED_16-04-24_17-27.txt

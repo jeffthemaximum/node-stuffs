@@ -3,5 +3,5 @@ what's in here is not important
 don't you love node?
 my-text-file.txt
 /Users/jeff/Dropbox/projects/promise_financial/js_is_fun-file_ops/files/original/my-text-file.txt
-/Users/jeff/Dropbox/projects/promise_financial/js_is_fun-file_ops/files/moved/my-text-file_EDITED_16-04-24_17-27.txt
-my-text-file_EDITED_16-04-24_17-27.txt
+/Users/jeff/Dropbox/projects/promise_financial/js_is_fun-file_ops/files/moved/my-text-file_EDITED_16-04-24_18-00.txt
+my-text-file_EDITED_16-04-24_18-00.txt

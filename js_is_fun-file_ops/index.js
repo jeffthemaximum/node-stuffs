@@ -13,7 +13,7 @@ var generateFileName = function(filename) {
     return(filename.replace(/\.[^/.]+$/, "") + "_EDITED_" + currDateTime + fileExt)
 }
 
-var myFileReader = function(err, contents, filename, wholePath, newFileName) {
+var myFileReader = function(err, contents, filename, wholePath) {
     
     var newFileName = generateFileName(filename);
     var newWholePath = __dirname + "/files/moved/" + newFileName;
