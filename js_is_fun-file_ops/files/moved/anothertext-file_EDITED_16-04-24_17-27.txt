@@ -1,0 +1,7 @@
+this is silly
+just some text in a file
+hrmmm doesnt this look like fun
+anothertext-file.txt
+/Users/jeff/Dropbox/projects/promise_financial/js_is_fun-file_ops/files/original/anothertext-file.txt
+/Users/jeff/Dropbox/projects/promise_financial/js_is_fun-file_ops/files/moved/anothertext-file_EDITED_16-04-24_17-27.txt
+anothertext-file_EDITED_16-04-24_17-27.txt
